@@ -26,7 +26,7 @@ body {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  padding: 20px;
+  padding: 40px;
 }
 
 .title {
@@ -36,7 +36,8 @@ body {
 }
 
 .subtitle {
-  font-size: 12px;
+  font-size: 14px;
+  font-style: italic;
 }
 
 code {

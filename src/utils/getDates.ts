@@ -15,7 +15,7 @@ interface datesType {
 }
 function getMonth() {
   const currentYear = new Date().getFullYear();
-  let dates = {};
+  let dates: any = {};
   monthList.forEach((month) => {
     dates[month] = new Date(`${month} 1, ${currentYear}`);
   });
@@ -50,5 +50,3 @@ export function getDates() {
     currentSem: currentSem(),
   };
 }
-
-console.log(getDates());

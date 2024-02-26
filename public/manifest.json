@@ -9,20 +9,15 @@
     "48": "icons/icon_48.png",
     "128": "icons/icon_128.png"
   },
-  "background": {
-    "service_worker": "background.js"
-  },
   "action": {
     "default_title": "Curtintabletoics",
     "default_popup": "popup.html"
   },
-  "permissions": [
-    "storage"
-  ],
+
   "content_scripts": [
     {
       "matches": [
-        "https://curtin-web.t1cloud.com/T1SMDefault/WebApps/eStudent/SM/*"
+        "https://*/*"
       ],
       "run_at": "document_idle",
       "js": [

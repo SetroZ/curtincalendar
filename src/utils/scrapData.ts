@@ -24,36 +24,43 @@ interface metaDataType<TimeType> {
 export default async function scrapData() {
   let results: any[] = [];
   let index = 0;
-  webDays.forEach(async (day) => {
+  for (const day of webDays) {
     let count = 0;
-    const ids = dataId(day, count++);
-    const metDataElement = document.getElementById(ids.metaDataId);
-    const nameIdElement = document.getElementById(ids.nameId);
     let debounce = false;
-    while (metDataElement != null && nameIdElement != null) {
+    index++;
+    while (true) {
+      const ids = dataId(day, count);
+      const metDataElement = document.getElementById(ids.metaDataId);
+      const nameIdElement = document.getElementById(ids.nameId);
+      if (metDataElement == null || nameIdElement == null) {
+        break;
+      }
+
       if (debounce == false) {
         debounce = true;
         results[index] = [];
       }
-      const data: metaDataType<string> = {
+
+      const data: any = {
         type: '',
         location: '',
         time: '',
       };
       for (const [key, value] of Object.entries(metDataClassNames)) {
-        const result = metDataElement.querySelector(value)!
+        const result = metDataElement.querySelector('.' + value)!
           .textContent as string;
-
-        data[key as keyof typeof any] =
+        console.log(result);
+        data[key] =
           key == 'time'
             ? convertTime(result)
             : key == 'location'
             ? await getLocation(result)
             : result;
       }
-      (results[index] as []).push(data);
+      (results[index] as [any]).push(data);
+      count++;
     }
-  });
+    debounce = false;
+  }
   return results;
 }
-scrapData().then((res) => console.log(res));
