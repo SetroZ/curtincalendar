@@ -15,7 +15,8 @@ export function convertTime(timeString: string) {
       return timeHandler(splitted);
     } else if (time.match('pm')) {
       const splitted = time.split('pm')[0].split(':');
-      return timeHandler(splitted, 12);
+
+      return timeHandler(splitted, splitted[0] == '12' ? 0 : 12);
     }
   });
   return { start: formattedTimes[0], end: formattedTimes[1] };

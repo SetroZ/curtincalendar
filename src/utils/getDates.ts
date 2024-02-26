@@ -29,9 +29,9 @@ const yearMonths = [
 function currentSem() {
   const month = new Date().getMonth();
   if (yearMonths[0].includes(month)) {
-    return 1;
+    return 'sem1';
   } else if (yearMonths[1].includes(month)) {
-    return 2;
+    return 'sem2';
   }
 }
 
@@ -47,6 +47,6 @@ export function getDates() {
       end: getnthMonday(October, 4) - 1,
     },
     currentYear,
-    currentSem: currentSem(),
+    currentSem: currentSem() as 'sem1' | 'sem2',
   };
 }

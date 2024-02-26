@@ -13,11 +13,13 @@
     "default_title": "Curtintabletoics",
     "default_popup": "popup.html"
   },
+  "permissions":["scripting"],
+
 
   "content_scripts": [
     {
       "matches": [
-        "https://*/*"
+        "https://curtin-web.t1cloud.com/T1SMDefault/WebApps/eStudent/SM/*"
       ],
       "run_at": "document_idle",
       "js": [

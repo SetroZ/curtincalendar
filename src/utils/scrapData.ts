@@ -1,6 +1,7 @@
 // ctl00_Content_ctlTimetableMain_TueDayCol_Body_2_BodyContentPanel seminar(6) 10am-120am 2022 122
 // id="ctl00_Content_ctlTimetableMain_TueDayCol_Body_2_HeaderPanel" name
 
+import { scrapDataType } from '../data';
 import { convertTime, getLocation } from './formatData';
 
 const dataId = (day: string, count: number) => ({
@@ -15,10 +16,11 @@ const metDataClassNames = {
   location: 'cssTtableClsSlotWhere',
   time: 'cssTtableClsSlotWhen',
 };
-interface metaDataType<TimeType> {
+interface metaDataType {
   type: string;
   location: string;
-  time: TimeType;
+  time: Date | false;
+  title: string;
 }
 
 export default async function scrapData() {
@@ -45,11 +47,11 @@ export default async function scrapData() {
         type: '',
         location: '',
         time: '',
+        title: '',
       };
       for (const [key, value] of Object.entries(metDataClassNames)) {
         const result = metDataElement.querySelector('.' + value)!
           .textContent as string;
-        console.log(result);
         data[key] =
           key == 'time'
             ? convertTime(result)
@@ -57,10 +59,14 @@ export default async function scrapData() {
             ? await getLocation(result)
             : result;
       }
+      data['title'] = (nameIdElement.textContent as string)
+        .replace('\t', '')
+        .replace('\n', '')
+        .replace('  ', '');
       (results[index] as [any]).push(data);
       count++;
     }
     debounce = false;
   }
-  return results;
+  return results as unknown as scrapDataType[][];
 }
