@@ -22,7 +22,7 @@
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "https://curtin-web.t1cloud.com/T1SMDefault/WebApps/eStudent/SM/*"
       ],
       "run_at": "document_idle",
       "js": [
