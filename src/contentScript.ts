@@ -23,13 +23,14 @@ const sem2 = {
   start: 'July',
   end: 'October',
 };
-
+import scrapData from './utils/scrapData';
 const tableRootId = 'ctl00_Content_ctlTimetableMain_DayGrp';
 
-import { getDates } from '../utils/getDates';
-const createICS = () => {
+import { getDates } from './utils/getDates';
+const createICS = async () => {
   const { sem1, sem2, currentYear, currentSem } = getDates();
-
-  
-  }
+  const result = await scrapData();
+  console.log(scrapData);
 };
+
+createICS().then((res) => res);
