@@ -13,7 +13,7 @@
     "default_title": "Curtintabletoics",
     "default_popup": "popup.html"
   },
-  "permissions":["scripting"],
+  "permissions":["scripting","downloads"],
 
 
   "content_scripts": [

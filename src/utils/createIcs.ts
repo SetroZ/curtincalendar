@@ -47,7 +47,8 @@ export const createICS = async () => {
           }
         : {};
       const value = {
-        title: event.title + '\n' + event.type,
+        startOutputType: 'local',
+        title: event.title + ' ' + event.type,
         start: [
           dates.currentYear,
           start,
@@ -60,7 +61,8 @@ export const createICS = async () => {
         status: 'CONFIRMED',
         categories: ['Classes'],
         busyStatus: 'BUSY',
-        description: event.type,
+        description:
+          event.title + ' ' + event.type + '\n ' + event.location.url,
         recurrenceRule: RRULE({
           day: (dates[dates.currentSem].end + index).toString(),
           month: end.toString(),
@@ -76,11 +78,3 @@ export const createICS = async () => {
   }
   return value;
 };
-async function handleDownload() {
-  const result = await createICS();
-  const fileName = 'CurtintimeTable.ics';
-
-  return result;
-}
-
-handleDownload().then((res) => console.log(res));

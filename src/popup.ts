@@ -3,20 +3,18 @@
 import './popup.css';
 import { commands } from './utils/communication';
 
-document.getElementById(commands.get)?.addEventListener('click', () => {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(
-      tabs[0].id as number,
-      { type: commands.get },
-      function (response) {
-        alert(response);
-      }
-    );
+document.getElementById(commands.get)?.addEventListener('click', async () => {
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const { result, fileName }: { result: string; fileName: string } =
+    await chrome.tabs.sendMessage(tab.id, {
+      command: commands.get,
+    });
+  const icsFile = new File([result as string], fileName, {
+    type: 'text/calendar',
+  });
+  const url = URL.createObjectURL(icsFile);
+  chrome.downloads.download({
+    url: url,
+    filename: fileName,
   });
 });
-
-// setTimeout(() => {
-//   chrome.runtime.sendMessage({
-//     greeting: 'hello',
-//   });
-// }, 5000);

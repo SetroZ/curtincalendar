@@ -34,7 +34,7 @@ const splitAt = (index: number, array: string | []) => [
 const getURL = (q: string) =>
   `https://search.mazemap.com/search/equery/?q=${q}&rows=1&start=0&withpois=true&withbuilding=true&withtype=true&withcampus=true&campusid=296&lng=115.89582570734012&lat=-32.00742307052456&boostbydistance=true`;
 
-const googleMapsURL = ({ long, lat }: { long: string; lat: string }) =>
+const googleMapsURL = ({ long, lat }: { long: number; lat: number }) =>
   `https://www.google.com/maps/search/?api=1&query=${long}%2C${lat}`;
 export async function getLocation(location: string) {
   try {
