@@ -31,12 +31,12 @@ export const createICS = async () => {
   const dataList: EventAttributes[] = [];
   let index = -1;
   const result = await scrapData();
+  console.log(result);
   result.forEach((dayResult) => {
     index++;
     if (dayResult.length == 0) return;
     const { start, end } = semdates[dates.currentSem];
     dayResult.forEach((event) => {
-      console.log(event);
       const ifLocation = event.location
         ? {
             location: `${event.location.placeName[0]}  Room:${event.location.room}  floor:${event.location.floor}`,
@@ -46,7 +46,7 @@ export const createICS = async () => {
             },
           }
         : { location: 'ONLINE' };
-      const value: EventAttributes = {
+      const singleEvent: EventAttributes = {
         startOutputType: 'local',
         title: event.title + ' ' + event.type,
         start: [
@@ -69,12 +69,13 @@ export const createICS = async () => {
           year: dates.currentYear,
         }),
       };
-      dataList.push(value);
+      console.log(singleEvent);
+      dataList.push(singleEvent);
     });
   });
   const { error, value } = createEvents(dataList);
   if (error) {
-    return error;
+    Error(error);
   }
   return value;
 };
