@@ -11,10 +11,9 @@ document
       currentWindow: true,
     });
     const { result, fileName }: { result: string; fileName: string } =
-      await chrome.tabs.sendMessage(tab.id, {
+      chrome.tabs.sendMessage(tab.id as number, {
         command: command.download,
-      });
-    console.log('fired');
+      }) as any;
     const icsFile = new File([result as string], fileName, {
       type: 'text/calendar',
     });
