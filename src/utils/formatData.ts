@@ -19,7 +19,11 @@ export function convertTime(timeString: string) {
       return timeHandler(splitted, splitted[0] == '12' ? 0 : 12);
     }
   });
-  return { start: formattedTimes[0], end: formattedTimes[1] };
+  const start = formattedTimes[0];
+  const end = formattedTimes[1];
+  const differenceInMinutes =
+    (end!.hour - start!.hour) * 60 + Math.abs(start!.minutes - end!.minutes);
+  return { start, end, differenceInMinutes };
 }
 //212 107
 const splitAt = (index: number, array: string | []) => [
@@ -29,6 +33,9 @@ const splitAt = (index: number, array: string | []) => [
 
 const getURL = (q: string) =>
   `https://search.mazemap.com/search/equery/?q=${q}&rows=1&start=0&withpois=true&withbuilding=true&withtype=true&withcampus=true&campusid=296&lng=115.89582570734012&lat=-32.00742307052456&boostbydistance=true`;
+
+const googleMapsURL = ({ long, lat }: { long: string; lat: string }) =>
+  `https://www.google.com/maps/search/?api=1&query=${long}%2C${lat}`;
 export async function getLocation(location: string) {
   try {
     const splitted = splitAt(3, location.replace(' ', ''));
@@ -39,12 +46,17 @@ export async function getLocation(location: string) {
     const data = datares.result[0];
     return {
       floor: data.zValue,
+
       coordinates: {
         long: data.geometry.coordinates[1],
         lat: data.geometry.coordinates[0],
       },
       placeName: data.dispBldNames,
       room: splitted[1],
+      url: googleMapsURL({
+        long: data.geometry.coordinates[1],
+        lat: data.geometry.coordinates[0],
+      }),
     };
   } catch (error) {
     return false;

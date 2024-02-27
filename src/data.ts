@@ -13,7 +13,6 @@ export type locationResponseType = typeof x;
 
 export const scrapDataExample = [
   null,
-  null,
   [
     {
       type: 'Lecture (1)',
@@ -27,8 +26,9 @@ export const scrapDataExample = [
           hour: 17,
           minutes: 0,
         },
+        differenceInMinutes: 60,
       },
-      title: '\n\t\t\t\t\t\t\t\t\t\t\tNPSC1003\n\t\t\t\t\t\t\t\t\t\t',
+      title: '\t\t\t\t\t\t\t\t\t\tNPSC1003\n\t\t\t\t\t\t\t\t\t\t',
     },
     {
       type: 'Computer Laboratory (10)',
@@ -43,15 +43,16 @@ export const scrapDataExample = [
       },
       time: {
         start: {
-          hour: 24,
+          hour: 12,
           minutes: 0,
         },
         end: {
           hour: 14,
           minutes: 0,
         },
+        differenceInMinutes: 120,
       },
-      title: '\n\t\t\t\t\t\t\t\t\t\t\tCOMP1002\n\t\t\t\t\t\t\t\t\t\t',
+      title: '\t\t\t\t\t\t\t\t\t\tCOMP1002\n\t\t\t\t\t\t\t\t\t\t',
     },
     {
       type: 'Seminar (6)',
@@ -73,8 +74,9 @@ export const scrapDataExample = [
           hour: 11,
           minutes: 0,
         },
+        differenceInMinutes: 60,
       },
-      title: '\n\t\t\t\t\t\t\t\t\t\t\tISEC2001\n\t\t\t\t\t\t\t\t\t\t',
+      title: '\t\t\t\t\t\t\t\t\t\tISEC2001\n\t\t\t\t\t\t\t\t\t\t',
     },
     {
       type: 'Workshop (15)',
@@ -96,8 +98,9 @@ export const scrapDataExample = [
           hour: 10,
           minutes: 0,
         },
+        differenceInMinutes: 120,
       },
-      title: '\n\t\t\t\t\t\t\t\t\t\t\tNPSC1003\n\t\t\t\t\t\t\t\t\t\t',
+      title: '\t\t\t\t\t\t\t\t\t\tNPSC1003\n\t\t\t\t\t\t\t\t\t\t',
     },
   ],
   [
@@ -121,8 +124,9 @@ export const scrapDataExample = [
           hour: 17,
           minutes: 0,
         },
+        differenceInMinutes: 180,
       },
-      title: '\n\t\t\t\t\t\t\t\t\t\t\tISEC2001\n\t\t\t\t\t\t\t\t\t\t',
+      title: '\t\t\t\t\t\t\t\t\t\tISEC2001\n\t\t\t\t\t\t\t\t\t\t',
     },
   ],
   [
@@ -146,8 +150,9 @@ export const scrapDataExample = [
           hour: 18,
           minutes: 0,
         },
+        differenceInMinutes: 120,
       },
-      title: '\n\t\t\t\t\t\t\t\t\t\t\tCOMP1000\n\t\t\t\t\t\t\t\t\t\t',
+      title: '\t\t\t\t\t\t\t\t\t\tCOMP1000\n\t\t\t\t\t\t\t\t\t\t',
     },
     {
       type: 'Lecture (1)',
@@ -169,8 +174,9 @@ export const scrapDataExample = [
           hour: 16,
           minutes: 0,
         },
+        differenceInMinutes: 120,
       },
-      title: '\n\t\t\t\t\t\t\t\t\t\t\tCOMP1002\n\t\t\t\t\t\t\t\t\t\t',
+      title: '\t\t\t\t\t\t\t\t\t\tCOMP1002\n\t\t\t\t\t\t\t\t\t\t',
     },
     {
       type: 'Computer Laboratory (6)',
@@ -189,35 +195,37 @@ export const scrapDataExample = [
           minutes: 0,
         },
         end: {
-          hour: 24,
+          hour: 12,
           minutes: 0,
         },
+        differenceInMinutes: 120,
       },
-      title: '\n\t\t\t\t\t\t\t\t\t\t\tCOMP1000\n\t\t\t\t\t\t\t\t\t\t',
+      title: '\t\t\t\t\t\t\t\t\t\tCOMP1000\n\t\t\t\t\t\t\t\t\t\t',
     },
   ],
 ];
-const type =  {
-  type: 'Computer Laboratory (10)',
+const type = {
+  type: 'Computer Laboratory (6)',
   location: {
-    floor: 2,
+    floor: 1,
     coordinates: {
-      long: -32.00742353601639,
-      lat: 115.89582650747299,
+      long: -32.00731819227635,
+      lat: 115.89595596696434,
     },
     placeName: ['314 (New Technologies)'],
-    room: '219',
+    room: '115',
   },
   time: {
     start: {
-      hour: 12,
+      hour: 10,
       minutes: 0,
     },
     end: {
-      hour: 14,
+      hour: 12,
       minutes: 0,
     },
+    differenceInMinutes: 120,
   },
-  title: '\n\t\t\t\t\t\t\t\t\t\t\tCOMP1002\n\t\t\t\t\t\t\t\t\t\t',
-}
-export type scrapDataType = typeof  type
+  title: '\t\t\t\t\t\t\t\t\t\tCOMP1000\n\t\t\t\t\t\t\t\t\t\t',
+};
+export type scrapDataType = typeof type;

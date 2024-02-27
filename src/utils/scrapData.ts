@@ -10,7 +10,7 @@ const dataId = (day: string, count: number) => ({
 });
 
 const webDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-const icsDays = ['MO', 'TU', 'WE', 'TH', 'FR'];
+
 const metDataClassNames = {
   type: 'cssTtableClsSlotWhat',
   location: 'cssTtableClsSlotWhere',
@@ -25,22 +25,21 @@ interface metaDataType {
 
 export default async function scrapData() {
   let results: any[] = [];
-  let index = 0;
+  let index = -1;
   for (const day of webDays) {
+    index++;
     let count = 0;
     let debounce = false;
-    index++;
     while (true) {
       const ids = dataId(day, count);
       const metDataElement = document.getElementById(ids.metaDataId);
       const nameIdElement = document.getElementById(ids.nameId);
-      if (metDataElement == null || nameIdElement == null) {
-        break;
-      }
-
       if (debounce == false) {
         debounce = true;
         results[index] = [];
+      }
+      if (metDataElement == null || nameIdElement == null) {
+        break;
       }
 
       const data: any = {
@@ -59,10 +58,8 @@ export default async function scrapData() {
             ? await getLocation(result)
             : result;
       }
-      data['title'] = (nameIdElement.textContent as string)
-        .replace('\t', '')
-        .replace('\n', '')
-        .replace('  ', '');
+      data['title'] = (nameIdElement.textContent as string).replace(/\s+/g, '');
+
       (results[index] as [any]).push(data);
       count++;
     }

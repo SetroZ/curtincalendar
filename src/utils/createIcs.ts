@@ -1,6 +1,7 @@
-import { createEvent } from 'ics';
+import { createEvents } from 'ics';
 import { getDates } from './getDates';
 import scrapData from './scrapData';
+
 const semdates = {
   sem1: {
     start: 2,
@@ -11,41 +12,75 @@ const semdates = {
     end: 10,
   },
 };
-const sem1 = {
-  start: 'Februray',
-  end: 'June',
-};
-const sem2 = {
-  start: 'July',
-  end: 'October',
-};
-const createICS = async () => {
-  const dates = getDates();
-  const result = await scrapData();
-  const icsResult = result.map((dayResult) => {
-    let index = 1;
-    const { start, end } = semdates[dates.currentSem];
+const RRULE = ({
+  day,
+  month,
+  year,
+}: {
+  day: string;
+  month: string;
+  year: number;
+}) =>
+  `FREQ=WEEKLY;INTERVAL=1;UNTIL=${2024}${
+    month.length == 1 ? '0' + month : month
+  }${day.length == 1 ? '0' + day : day}T160000Z`;
 
-    if (dayResult.length != 0) {
-      dayResult.forEach((event) => {
-        const difference =
-          (event.time.start.hour - event.time.end.hour) * 60 +
-          Math.abs(event.time.start.minutes - event.time.end.minutes);
-        const { error, value } = createEvent({
-          title: event.title,
-          start: [
-            dates.currentYear,
-            start,
-            dates[dates.currentSem].start,
-            event.time.start.hour,
-            event.time.start.minutes,
-          ],
-          duration: { minutes: difference },
-          location:event.location.placeName[0]
-        });
-      });
-    }
+const icsDays = ['MO', 'TU', 'WE', 'TH', 'FR'];
+export const createICS = async () => {
+  const dates = getDates();
+  const dataList = [];
+  let index = -1;
+  const result = await scrapData();
+  console.log(result);
+  result.forEach((dayResult) => {
+    index++;
+    if (dayResult.length == 0) return;
+    const { start, end } = semdates[dates.currentSem];
+    dayResult.forEach((event) => {
+      const ifLocation = event.location
+        ? {
+            location: `${event.location.placeName[0]}  Room:${event.location.room}  floor:${event.location.floor}`,
+            geo: {
+              lat: event.location.coordinates.lat,
+              lon: event.location.coordinates.long,
+            },
+          }
+        : {};
+      const value = {
+        title: event.title + '\n' + event.type,
+        start: [
+          dates.currentYear,
+          start,
+          dates[dates.currentSem].start + index,
+          event.time.start.hour,
+          event.time.start.minutes,
+        ],
+        duration: { minutes: event.time.differenceInMinutes },
+        ...ifLocation,
+        status: 'CONFIRMED',
+        categories: ['Classes'],
+        busyStatus: 'BUSY',
+        description: event.type,
+        recurrenceRule: RRULE({
+          day: (dates[dates.currentSem].end + index).toString(),
+          month: end.toString(),
+          year: dates.currentYear,
+        }),
+      };
+      dataList.push(value);
+    });
   });
+  const { error, value } = createEvents(dataList);
+  if (error) {
+    return error;
+  }
+  return value;
+};
+async function handleDownload() {
+  const result = await createICS();
+  const fileName = 'CurtintimeTable.ics';
 
   return result;
-};
+}
+
+handleDownload().then((res) => console.log(res));
