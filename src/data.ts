@@ -1,14 +1,4 @@
-export interface locationResponseType {
-  result: [
-    {
-      geometry: {
-        coordinates: [number, number];
-      };
-      zValue: number;
-      dispBldNames: [string];
-    }
-  ];
-}
+
 
 export const scrapDataExample = [
   null,

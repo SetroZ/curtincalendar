@@ -1,5 +1,5 @@
 import { EventAttributes, createEvents } from 'ics';
-import { getDates } from './getDates';
+import { getDates } from './format/getDates';
 import scrapData from './scrapData';
 
 const semdates = {
@@ -36,6 +36,7 @@ export const createICS = async () => {
     if (dayResult.length == 0) return;
     const { start, end } = semdates[dates.currentSem];
     dayResult.forEach((event) => {
+      console.log(event);
       const ifLocation = event.location
         ? {
             location: `${event.location.placeName[0]}  Room:${event.location.room}  floor:${event.location.floor}`,

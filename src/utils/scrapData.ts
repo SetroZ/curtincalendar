@@ -1,8 +1,8 @@
 // ctl00_Content_ctlTimetableMain_TueDayCol_Body_2_BodyContentPanel seminar(6) 10am-120am 2022 122
 // id="ctl00_Content_ctlTimetableMain_TueDayCol_Body_2_HeaderPanel" name
 
-import { scrapDataType } from '../data';
-import { convertTime, getLocation } from './formatData';
+import { convertTime, getLocation } from './format/formatData';
+import { scrappedDataType } from './types';
 
 const dataId = (day: string, count: number) => ({
   metaDataId: `ctl00_Content_ctlTimetableMain_${day}DayCol_Body_${count}_BodyContentPanel`,
@@ -24,7 +24,7 @@ interface metaDataType {
 }
 
 export default async function scrapData() {
-  let results: any[] = [];
+  let results: scrappedDataType[][] = [];
   let index = -1;
   for (const day of webDays) {
     index++;
@@ -36,7 +36,7 @@ export default async function scrapData() {
       const nameIdElement = document.getElementById(ids.nameId);
       if (debounce == false) {
         debounce = true;
-        results[index] = [];
+        results[index] = [] as scrappedDataType[];
       }
       if (metDataElement == null || nameIdElement == null) {
         break;
@@ -65,5 +65,5 @@ export default async function scrapData() {
     }
     debounce = false;
   }
-  return results as unknown as scrapDataType[][];
+  return results;
 }

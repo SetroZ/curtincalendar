@@ -1,3 +1,4 @@
+import { datesType } from '../types';
 function getnthMonday(date: Date, n: number) {
   while (date.getDay() !== 1) {
     date.setDate(date.getDate() + 1);
@@ -6,13 +7,7 @@ function getnthMonday(date: Date, n: number) {
   return date.getDate();
 }
 const monthList = ['Februray', 'June', 'July', 'October'];
-interface datesType {
-  Februray: Date;
-  June: Date;
 
-  July: Date;
-  October: Date;
-}
 function getMonth() {
   const currentYear = new Date().getFullYear();
   let dates: any = {};

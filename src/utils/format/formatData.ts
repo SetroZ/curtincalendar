@@ -1,7 +1,6 @@
 //example of a string
 // 8:00 am-10:00 am<
-
-import { locationResponseType } from '../data';
+import { locationResponseType } from '../types';
 
 const timeHandler = (splitted: string[], n = 0) => {
   return { hour: Number(splitted[0]) + n, minutes: Number(splitted[1]) };
