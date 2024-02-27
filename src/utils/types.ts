@@ -25,13 +25,13 @@ export interface locationResponseType {
 export interface scrappedDataType {
   type: string;
   location: {
+    placeName: [string];
+    room: string;
+    url: string;
     floor: number;
     coordinates: {
       long: number;
       lat: number;
-      placeName: [string];
-      room: string;
-      url: string;
     };
   };
   time: {
