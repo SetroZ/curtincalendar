@@ -59,10 +59,13 @@ export const createICS = async () => {
         duration: { minutes: event.time.differenceInMinutes },
         ...ifLocation,
         status: 'CONFIRMED',
-        categories: ['Classes'],
         busyStatus: 'BUSY',
         description:
-          event.title + ' ' + event.type + '\n ' + event.location.url,
+          event.title +
+          ' ' +
+          event.type +
+          '\n ' +
+          (event.location ? event.location.url : ''),
         recurrenceRule: RRULE({
           day: (dates[dates.currentSem].end + index).toString(),
           month: end.toString(),
@@ -74,8 +77,6 @@ export const createICS = async () => {
     });
   });
   const { error, value } = createEvents(dataList);
-  if (error) {
-    Error(error);
-  }
+
   return value;
 };
