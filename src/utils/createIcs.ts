@@ -1,4 +1,4 @@
-import { createEvents } from 'ics';
+import { EventAttributes, createEvents } from 'ics';
 import { getDates } from './getDates';
 import scrapData from './scrapData';
 
@@ -28,7 +28,7 @@ const RRULE = ({
 const icsDays = ['MO', 'TU', 'WE', 'TH', 'FR'];
 export const createICS = async () => {
   const dates = getDates();
-  const dataList = [];
+  const dataList: EventAttributes[] = [];
   let index = -1;
   const result = await scrapData();
   result.forEach((dayResult) => {
@@ -44,8 +44,8 @@ export const createICS = async () => {
               lon: event.location.coordinates.long,
             },
           }
-        : {};
-      const value = {
+        : { location: 'ONLINE' };
+      const value: EventAttributes = {
         startOutputType: 'local',
         title: event.title + ' ' + event.type,
         start: [

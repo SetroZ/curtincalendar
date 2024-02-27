@@ -15,8 +15,8 @@ html {
 }
 
 body {
-  width: 350px;
-  height: 300px;
+  width: 300px;
+  height: 340px;
 }
 
 .app {
@@ -26,18 +26,21 @@ body {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  padding: 40px;
+  padding: 20px;
 }
 
 .title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   margin-bottom: 10px;
 }
 
 .subtitle {
-  font-size: 14px;
+  font-size: 16px;
   font-style: italic;
+}
+p {
+  font-size: 14px;
 }
 
 code {
@@ -61,14 +64,16 @@ code {
 .button-container {
   margin-top: 15px;
 }
-
+.icon {
+  font-size: 20px;
+}
 .button {
   border: 0;
   display: inline-block;
   padding: 10px 20px;
   margin-right: 4px;
   margin-left: 4px;
-  background-color: bisque;
+  background-color: gainsboro;
   font-size: 16px;
   cursor: pointer;
   border-radius: 4px;
@@ -86,8 +91,14 @@ code {
 }
 
 .divider {
-  margin: 30px auto 25px;
+  margin: 15px auto 5px;
   width: 50px;
   border: 0.5px dashed #000;
   opacity: 0.1;
+}
+#error {
+  font-weight: bold;
+  color: crimson;
+  font-size: 14;
+  display: none;
 }
