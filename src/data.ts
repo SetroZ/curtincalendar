@@ -1,15 +1,14 @@
-const x = {
+export interface locationResponseType {
   result: [
     {
       geometry: {
-        coordinates: [115.89613736396142, -32.007253740940804],
-      },
-      zValue: 2,
-      dispBldNames: ['314 (New Technologies)'],
-    },
-  ],
-};
-export type locationResponseType = typeof x;
+        coordinates: [number, number];
+      };
+      zValue: number;
+      dispBldNames: [string];
+    }
+  ];
+}
 
 export const scrapDataExample = [
   null,

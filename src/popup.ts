@@ -1,13 +1,13 @@
 'use strict';
 
 import './popup.css';
-import { commands } from './utils/communication';
+import { commands } from './utils/types';
 
 document.getElementById(commands.get)?.addEventListener('click', async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   const { result, fileName }: { result: string; fileName: string } =
     await chrome.tabs.sendMessage(tab.id, {
-      command: commands.get,
+      command: commands.download,
     });
   const icsFile = new File([result as string], fileName, {
     type: 'text/calendar',

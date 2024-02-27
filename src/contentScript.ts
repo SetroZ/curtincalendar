@@ -3,6 +3,7 @@
 const tableRootId = 'ctl00_Content_ctlTimetableMain_DayGrp';
 
 import { createICS } from './utils/createIcs';
+import { commands } from './utils/types';
 
 async function handleDownload() {
   const result = await createICS();
@@ -10,9 +11,11 @@ async function handleDownload() {
   return { result, fileName };
 }
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  handleDownload().then((res) => {
-    sendResponse(res);
-  });
+  if (request.command == commands.download) {
+    handleDownload().then((res) => {
+      sendResponse(res);
+    });
+  }
 
   return true;
 });
