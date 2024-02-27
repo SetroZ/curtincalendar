@@ -31,7 +31,6 @@ export const createICS = async () => {
   const dataList = [];
   let index = -1;
   const result = await scrapData();
-  console.log(result);
   result.forEach((dayResult) => {
     index++;
     if (dayResult.length == 0) return;

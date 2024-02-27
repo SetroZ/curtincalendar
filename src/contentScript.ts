@@ -11,11 +11,8 @@ async function handleDownload() {
 }
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   handleDownload().then((res) => {
-    console.log(res);
-
     sendResponse(res);
   });
-  console.log('fired');
+
   return true;
 });
-console.log('intialized');

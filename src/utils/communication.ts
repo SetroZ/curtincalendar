@@ -6,4 +6,3 @@ export enum responses {
   fail = 'fail',
   success = 'success',
 }
-
