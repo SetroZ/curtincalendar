@@ -1,12 +1,12 @@
 'use strict';
 
+import { command } from './types';
 import { createICS } from './utils/createIcs';
-import { command } from './utils/types';
 
 async function handleDownload() {
   const result = await createICS();
-  
-  const fileName = 'CurtintimeTable.ics';
+
+  const fileName = 'CurtinCalendar.ics';
   return { result, fileName };
 }
 

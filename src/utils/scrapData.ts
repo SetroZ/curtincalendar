@@ -1,8 +1,8 @@
 // ctl00_Content_ctlTimetableMain_TueDayCol_Body_2_BodyContentPanel seminar(6) 10am-120am 2022 122
 // id="ctl00_Content_ctlTimetableMain_TueDayCol_Body_2_HeaderPanel" name
 
+import { scrappedDataType } from '../types';
 import { convertTime, getLocation } from './format/formatData';
-import { scrappedDataType } from './types';
 
 const dataId = (day: string, count: number) => ({
   metaDataId: `ctl00_Content_ctlTimetableMain_${day}DayCol_Body_${count}_BodyContentPanel`,

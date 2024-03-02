@@ -1,7 +1,7 @@
 'use strict';
 
 import './popup.css';
-import { command } from './utils/types';
+import { command } from './types';
 
 document
   .getElementById(command.download)

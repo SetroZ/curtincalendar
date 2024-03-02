@@ -12,7 +12,7 @@
     "default_title": "Curtin Calendar",
     "default_popup": "popup.html"
   },
-  "permissions": ["scripting", "downloads"],
+  "permissions": ["downloads"],
 
   "content_scripts": [
     {

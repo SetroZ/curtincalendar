@@ -1,4 +1,4 @@
-import { datesType } from '../types';
+import { datesType } from '../../types';
 function getnthMonday(date: Date, n: number) {
   while (date.getDay() !== 1) {
     date.setDate(date.getDate() + 1);
