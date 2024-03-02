@@ -48,9 +48,9 @@ export interface scrappedDataType {
   title: string;
 }
 
-export interface datesType {
+export interface MonthListType {
   Februray: Date;
-  June: Date;
+  May: Date;
 
   July: Date;
   October: Date;

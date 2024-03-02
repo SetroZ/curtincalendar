@@ -1,4 +1,4 @@
-import { datesType } from '../../types';
+import { MonthListType } from '../../types';
 function getnthMonday(date: Date, n: number) {
   while (date.getDay() !== 1) {
     date.setDate(date.getDate() + 1);
@@ -6,7 +6,7 @@ function getnthMonday(date: Date, n: number) {
   date.setDate(date.getDate() + 7 * (n - 1));
   return date.getDate();
 }
-const monthList = ['Februray', 'June', 'July', 'October'];
+const monthList = ['Februray', 'May', 'July', 'October'];
 
 function getMonth() {
   const currentYear = new Date().getFullYear();
@@ -15,7 +15,7 @@ function getMonth() {
     dates[month] = new Date(`${month} 1, ${currentYear}`);
   });
 
-  return { ...(dates as unknown as datesType), currentYear };
+  return { ...(dates as unknown as MonthListType), currentYear };
 }
 const yearMonths = [
   [1, 2, 3, 4, 5, 6],
@@ -31,15 +31,15 @@ function currentSem() {
 }
 
 export function getDates() {
-  const { Februray, June, July, October, currentYear } = getMonth();
+  const { Februray, May, July, October, currentYear } = getMonth();
   return {
     sem1: {
       start: getnthMonday(Februray, 4),
-      end: getnthMonday(June, 1) - 1,
+      end: getnthMonday(May, 4) - 1,
     },
     sem2: {
       start: getnthMonday(July, 4),
-      end: getnthMonday(October, 4) - 1,
+      end: getnthMonday(October, 3) - 1,
     },
     currentYear,
     currentSem: currentSem() as 'sem1' | 'sem2',
