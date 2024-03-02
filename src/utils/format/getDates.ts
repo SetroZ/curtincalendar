@@ -32,6 +32,7 @@ function currentSem() {
 
 export function getDates() {
   const { Februray, May, July, October, currentYear } = getMonth();
+  
   return {
     sem1: {
       start: getnthMonday(Februray, 4),
@@ -45,3 +46,5 @@ export function getDates() {
     currentSem: currentSem() as 'sem1' | 'sem2',
   };
 }
+
+console.log(getDates());

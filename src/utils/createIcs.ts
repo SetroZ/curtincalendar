@@ -5,7 +5,7 @@ import scrapData from './scrapData';
 const semdates = {
   sem1: {
     start: 2,
-    end: 6,
+    end: 5,
   },
   sem2: {
     start: 7,
