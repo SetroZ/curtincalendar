@@ -7,7 +7,7 @@
 
 ## Install
 
-[**Chrome** extension]() <!-- TODO: Add chrome extension link inside parenthesis -->
+[**Chrome** extension](https://chromewebstore.google.com/detail/ogmkocokggpfneccbpdmdgagflcmgeef) <!-- TODO: Add chrome extension link inside parenthesis -->
 
 ## Contribution
 
