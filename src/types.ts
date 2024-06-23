@@ -22,6 +22,16 @@ export interface locationResponseType {
     }
   ];
 }
+
+export interface classTimeType {
+  start: timeStamp;
+  end: timeStamp;
+  differenceInMinutes: number;
+}
+export type timeStamp = {
+  hour: number;
+  minutes: number;
+};
 export interface scrappedDataType {
   type: string;
   location: {
@@ -34,17 +44,7 @@ export interface scrappedDataType {
       lat: number;
     };
   };
-  time: {
-    start: {
-      hour: number;
-      minutes: number;
-    };
-    end: {
-      hour: number;
-      minutes: number;
-    };
-    differenceInMinutes: number;
-  };
+  time: classTimeType;
   title: string;
 }
 

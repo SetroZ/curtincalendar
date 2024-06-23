@@ -12,6 +12,8 @@ const semdates = {
     end: 10,
   },
 };
+
+//frequency rule
 const RRULE = ({
   day,
   month,
@@ -24,6 +26,8 @@ const RRULE = ({
   `FREQ=WEEKLY;INTERVAL=1;UNTIL=${2024}${
     month.length == 1 ? '0' + month : month
   }${day.length == 1 ? '0' + day : day}T160000Z`;
+
+
 
 const icsDays = ['MO', 'TU', 'WE', 'TH', 'FR'];
 export const createICS = async () => {
@@ -72,6 +76,7 @@ export const createICS = async () => {
           year: dates.currentYear,
         }),
       };
+
       console.log(singleEvent);
       dataList.push(singleEvent);
     });
