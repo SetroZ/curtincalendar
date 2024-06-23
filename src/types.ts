@@ -55,3 +55,26 @@ export interface MonthListType {
   July: Date;
   October: Date;
 }
+
+export interface semesterDatesType {
+  1: {
+    start: {
+      month: number;
+      day: number;
+    };
+    end: {
+      month: number;
+      day: number;
+    };
+  };
+  2: {
+    start: {
+      month: number;
+      day: number;
+    };
+    end: {
+      month: number;
+      day: number;
+    };
+  };
+}

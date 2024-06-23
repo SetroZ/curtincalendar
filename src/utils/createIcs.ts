@@ -2,17 +2,6 @@ import { EventAttributes, createEvents } from 'ics';
 import { getDates } from './format/getDates';
 import scrapData from './scrapData';
 
-const semdates = {
-  sem1: {
-    start: 2,
-    end: 5,
-  },
-  sem2: {
-    start: 7,
-    end: 10,
-  },
-};
-
 /**  ICS frequency rule */
 const RRULE = ({
   day,
@@ -27,17 +16,17 @@ const RRULE = ({
     month.length == 1 ? '0' + month : month
   }${day.length == 1 ? '0' + day : day}T160000Z`;
 
-const icsDays = ['MO', 'TU', 'WE', 'TH', 'FR'];
-export const createICS = async () => {
-  const dates = getDates();
+// const icsDays = ['MO', 'TU', 'WE', 'TH', 'FR'];
+export const createICS = async (semester: 1 | 2) => {
+  const dates = getDates(new Date().getFullYear());
   const events: EventAttributes[] = [];
   let index = -1;
+  const semDates = dates[semester];
   const result = await scrapData();
   Object.keys(result).forEach((key) => {
     index++;
     const dayResult = result[key];
     if (dayResult.length == 0) return;
-    const { start, end } = semdates[dates.currentSem];
     dayResult.forEach((event) => {
       const ifLocation = event.location
         ? {
@@ -52,11 +41,11 @@ export const createICS = async () => {
         startOutputType: 'local',
         title: event.title + ' ' + event.type,
         start: [
-          dates.currentYear,
-          start,
-          dates[dates.currentSem].start + index,
-          event.time.start.hour,
-          event.time.start.minutes,
+          dates.currentYear, //year
+          semDates.start.month, //month
+          semDates.start.day + index, //day
+          event.time.start.hour, //hour
+          event.time.start.minutes, // minute
         ],
         duration: { minutes: event.time.differenceInMinutes },
         ...ifLocation,
@@ -69,8 +58,8 @@ export const createICS = async () => {
           '\n ' +
           (event.location ? event.location.url : ''),
         recurrenceRule: RRULE({
-          day: (dates[dates.currentSem].end + index).toString(),
-          month: end.toString(),
+          day: (semDates.end.day + index).toString(),
+          month: semDates.end.month.toString(),
           year: dates.currentYear,
         }),
       };

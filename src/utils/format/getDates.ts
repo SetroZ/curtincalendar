@@ -1,15 +1,22 @@
 import { MonthListType } from '../../types';
 function getnthMonday(date: Date, n: number) {
-  while (date.getDay() !== 1) {
-    date.setDate(date.getDate() + 1);
+  const newDate = new Date(date);
+  while (newDate.getDay() !== 1) {
+    newDate.setDate(newDate.getDate() + 1);
   }
-  date.setDate(date.getDate() + 7 * (n - 1));
-  return date.getDate();
+  newDate.setDate(newDate.getDate() + 7 * (n - 1));
+  return newDate;
 }
+function addnWeeks(date: Date, n: number) {
+  const newDate = new Date(date);
+  newDate.setDate(newDate.getDate() + 7 * n);
+  return newDate;
+}
+
 const monthList = ['Februray', 'May', 'July', 'October'];
 
-function getMonth() {
-  const currentYear = new Date().getFullYear();
+function getDatesofMonths(year: number) {
+  const currentYear = year;
   let dates: any = {};
   monthList.forEach((month) => {
     dates[month] = new Date(`${month} 1, ${currentYear}`);
@@ -17,34 +24,41 @@ function getMonth() {
 
   return { ...(dates as unknown as MonthListType), currentYear };
 }
-const yearMonths = [
-  [1, 2, 3, 4, 5, 6],
-  [7, 8, 9, 10, 11],
-];
-function currentSem() {
-  const month = new Date().getMonth();
-  if (yearMonths[0].includes(month)) {
-    return 'sem1';
-  } else if (yearMonths[1].includes(month)) {
-    return 'sem2';
-  }
-}
 
-export function getDates() {
-  const { Februray, May, July, October, currentYear } = getMonth();
-
+export function getDates(year: number) {
+  const { Februray } = getDatesofMonths(year);
+  const startSem1: Date = getnthMonday(Februray, 4);
+  const endSem1: Date = addnWeeks(startSem1, 13);
+  const startSem2: Date = addnWeeks(endSem1, 8);
+  const endSem2: Date = addnWeeks(startSem2, 13);
   return {
-    sem1: {
-      start: getnthMonday(Februray, 4),
-      end: getnthMonday(May, 3) - 1,
+    1: {
+      start: {
+        month: 2,
+        day: startSem1.getDate(),
+      },
+      end: {
+        month: 5,
+        day: endSem1.getDate() - 1,
+      },
     },
-    sem2: {
-      start: getnthMonday(July, 4),
-      end: getnthMonday(October, 2) - 1,
+    2: {
+      start: {
+        month: 7,
+        day: startSem2.getDate(),
+      },
+      end: {
+        month: 10,
+        day: endSem2.getDate() - 1,
+      },
     },
-    currentYear,
-    currentSem: currentSem() as 'sem1' | 'sem2',
+    currentYear: year,
   };
 }
 
-console.log(getDates());
+// quick Test
+function testGetDates() {
+  for (let i = 2022; i < 2028; i++) {
+    console.log(getDates(i));
+  }
+}
