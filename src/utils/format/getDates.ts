@@ -32,15 +32,15 @@ function currentSem() {
 
 export function getDates() {
   const { Februray, May, July, October, currentYear } = getMonth();
-  
+
   return {
     sem1: {
       start: getnthMonday(Februray, 4),
-      end: getnthMonday(May, 4) - 1,
+      end: getnthMonday(May, 3) - 1,
     },
     sem2: {
       start: getnthMonday(July, 4),
-      end: getnthMonday(October, 3) - 1,
+      end: getnthMonday(October, 2) - 1,
     },
     currentYear,
     currentSem: currentSem() as 'sem1' | 'sem2',

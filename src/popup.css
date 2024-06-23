@@ -92,7 +92,7 @@ code {
 
 .divider {
   margin: 15px auto 5px;
-  width: 50px;
+  width: 50%;
   border: 0.5px dashed #000;
   opacity: 0.1;
 }
@@ -101,4 +101,14 @@ code {
   color: crimson;
   font-size: 14;
   display: none;
+}
+.radio-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+.label-container {
+  display: flex;
+  gap: 5px;
 }

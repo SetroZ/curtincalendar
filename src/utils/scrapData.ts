@@ -24,7 +24,7 @@ import { scrappedDataType } from '../types';
 import { convertTime, getLocation } from './format/formatData';
 
 /**Returns HTMl element id to be read. Check dataExample.html for an example*/
-const generateElemtntId = (day: string, count: number) => ({
+const generateElementId = (day: string, count: number) => ({
   metaDataId: `ctl00_Content_ctlTimetableMain_${day}DayCol_Body_${count}_BodyContentPanel`,
   nameId: `ctl00_Content_ctlTimetableMain_${day}DayCol_Body_${count}_HeaderPanel`,
 });
@@ -47,23 +47,19 @@ interface metaDataType {
 
 /**  Reads data from webpage returns scrappedData */
 export default async function scrapData() {
-  let results: scrappedDataType[][] = [];
-  let index = -1;
+  const results: { [key: string]: scrappedDataType[] } = {};
   for (const day of webDays) {
-    index++;
     let count = 0;
-    let debounce = false;
     while (true) {
       //keep reading until we cant find any more classes for the specific webDay
-      const elementId = generateElemtntId(day, count);
+      const elementId = generateElementId(day, count);
       const metDataElement = document.getElementById(elementId.metaDataId);
       const nameIdElement = document.getElementById(elementId.nameId);
-      if (debounce == false) {
-        debounce = true;
-        results[index] = [] as scrappedDataType[];
-      }
       if (metDataElement == null || nameIdElement == null) {
         break;
+      }
+      if (day in results == false) {
+        results[day] = [];
       }
 
       const data: any = {
@@ -82,12 +78,10 @@ export default async function scrapData() {
             ? await getLocation(result)
             : result;
       }
-      data['title'] = (nameIdElement.textContent as string).replace(/\s+/g, '');
-
-      (results[index] as [any]).push(data);
+      data['title'] = (nameIdElement.textContent as string).replace(/\s+/g, ''); // regex to remove all spaces,tabs, newlines
+      results[day].push(data);
       count++;
     }
-    debounce = false;
   }
   return results;
 }

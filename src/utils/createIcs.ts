@@ -13,7 +13,7 @@ const semdates = {
   },
 };
 
-//frequency rule
+/**  ICS frequency rule */
 const RRULE = ({
   day,
   month,
@@ -23,21 +23,19 @@ const RRULE = ({
   month: string;
   year: number;
 }) =>
-  `FREQ=WEEKLY;INTERVAL=1;UNTIL=${2024}${
+  `FREQ=WEEKLY;INTERVAL=1;UNTIL=${year}${
     month.length == 1 ? '0' + month : month
   }${day.length == 1 ? '0' + day : day}T160000Z`;
-
-
 
 const icsDays = ['MO', 'TU', 'WE', 'TH', 'FR'];
 export const createICS = async () => {
   const dates = getDates();
-  const dataList: EventAttributes[] = [];
+  const events: EventAttributes[] = [];
   let index = -1;
   const result = await scrapData();
-  console.log(result);
-  result.forEach((dayResult) => {
+  Object.keys(result).forEach((key) => {
     index++;
+    const dayResult = result[key];
     if (dayResult.length == 0) return;
     const { start, end } = semdates[dates.currentSem];
     dayResult.forEach((event) => {
@@ -78,10 +76,10 @@ export const createICS = async () => {
       };
 
       console.log(singleEvent);
-      dataList.push(singleEvent);
+      events.push(singleEvent);
     });
   });
-  const { error, value } = createEvents(dataList);
+  const { error, value } = createEvents(events);
 
   return value;
 };
