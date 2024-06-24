@@ -3,8 +3,8 @@
 import { command } from './types';
 import { createICS } from './utils/createIcs';
 
-async function handleDownload(semseter: 1 | 2) {
-  const result = await createICS(semseter);
+async function handleDownload(semester: 1 | 2) {
+  const result = await createICS(semester);
 
   const fileName = 'CurtinCalendar.ics';
   return { result, fileName };

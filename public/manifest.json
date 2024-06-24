@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Curtin Calendar",
-  "version": "0.1.0",
-  "description": "Convert your curtin timetable into an ics file with a click of a button🚀. Avoid the hassle of writing it yourself",
+  "version": "0.2.0",
+  "description": "Convert your curtin timetable into a calendar file with the click of a button🚀. Save your precious time⏰",
   "icons": {
     "16": "icons/icon_16.png",
     "48": "icons/icon_48.png",

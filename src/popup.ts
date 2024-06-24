@@ -10,7 +10,8 @@ const hidden = 'none';
 const button = document.getElementById(command.download) as HTMLElement;
 const loader = document.getElementById('loader') as HTMLElement;
 const errorElement = document.getElementById('error') as HTMLElement;
-async function setLoading(isVisible: boolean) {
+
+function setLoading(isVisible: boolean) {
   if (!isVisible) {
     loading = false;
     button.style.display = visible;
@@ -22,7 +23,20 @@ async function setLoading(isVisible: boolean) {
   }
 }
 
-function initializeEvent() {
+function onError(errorMessage: string) {
+  errorElement.style.display = visible;
+  loader.style.display = hidden;
+  const message = errorElement.innerText;
+  errorElement.innerText = errorElement.innerText + ' \n ' + errorMessage;
+  setTimeout(async () => {
+    errorElement.style.display = hidden;
+    errorElement.innerText = message;
+
+    setLoading(false);
+  }, 5000);
+}
+
+function onClick() {
   button.addEventListener('click', async () => {
     try {
       if (loading) {
@@ -50,21 +64,12 @@ function initializeEvent() {
       });
       setLoading(false);
     } catch (error) {
-      errorElement.style.display = visible;
-      loader.style.display = hidden;
-      const message = errorElement.innerText;
-      errorElement.innerText = errorElement.innerText + ' \n ' + error;
-      setTimeout(async () => {
-        errorElement.style.display = hidden;
-        errorElement.innerText = message;
-
-        setLoading(false);
-      }, 5000);
+      onError(error as string);
     }
   });
 }
 
-// approximate semester by month
+// approximate semesters by month
 const yearMonths = [
   [1, 2, 3, 4, 5],
   [6, 7, 8, 9, 10, 11],
@@ -84,6 +89,7 @@ function setDefaultSemester() {
   document.getElementById(semesterId)?.setAttribute('checked', 'true');
 }
 
+/**Reads selected semester */
 function getSelectedSemester(): 1 | 2 {
   const sem1 = document.getElementById('semester1')?.getAttribute('checked');
   const sem2 = document.getElementById('semester1')?.getAttribute('checked');
@@ -96,6 +102,6 @@ function getSelectedSemester(): 1 | 2 {
 
 function main() {
   setDefaultSemester();
-  initializeEvent();
+  onClick();
 }
 main();

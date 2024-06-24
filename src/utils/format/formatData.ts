@@ -1,8 +1,6 @@
-//example of a string
-// ,8:00 am-10:00 am
 import { classTimeType, locationResponseType, timeStamp } from '../../types';
 
-/**takes Xam/pm  and returns timeStamp */
+/**takes "Xam/pm"  and returns timeStamp{hours,minutes} */
 const Format24 = (time: string): timeStamp => {
   let splitted;
   let n = 0;
@@ -10,12 +8,17 @@ const Format24 = (time: string): timeStamp => {
     splitted = time.split('am')[0].split(':'); // gets hour and minutes [8,00]
   } else {
     // PM
-    splitted = time.split('pm')[0].split(':');
-    n = 12;
+    if (time[0] == '1' && time[1] == '2') {
+      splitted = time.split('pm')[0].split(':'); // 12 pm case
+    } else {
+      splitted = time.split('pm')[0].split(':');
+      n = 12;
+    }
   }
   return { hour: Number(splitted[0]) + n, minutes: Number(splitted[1]) };
 };
 
+// ,8:00 am-10:00 am
 /** remove any spaces & remove comma & splits into [Xam/pm, Yam/pm] */
 const splitToStartEnd = (timeString: string) => {
   const res = timeString.replace(' ', '').replace(',', '').split('-');
@@ -33,7 +36,7 @@ export function convertTime(timeString: string): classTimeType {
   return { start, end, differenceInMinutes };
 }
 
-console.log(convertTime(',8:00 am-10:00 pm'));
+console.log(convertTime(',8:00 am-12:00 pm'));
 
 //212 107
 const splitAt = (index: number, array: string) => [
