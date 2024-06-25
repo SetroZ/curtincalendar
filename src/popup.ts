@@ -79,24 +79,29 @@ function currentSem() {
   const month = new Date().getMonth() + 1;
   if (yearMonths[0].includes(month)) {
     return 1;
-  } else if (yearMonths[1].includes(month)) {
+  } else {
     return 2;
   }
 }
 /** Approxmiates current semester and modifies radio button */
 function setDefaultSemester() {
   const semesterId = `semester${currentSem()}`;
-  document.getElementById(semesterId)?.setAttribute('checked', 'true');
+  (document.getElementById(semesterId) as HTMLInputElement).checked = true;
 }
 
 /**Reads selected semester */
 function getSelectedSemester(): 1 | 2 {
-  const sem1 = document.getElementById('semester1')?.getAttribute('checked');
-  const sem2 = document.getElementById('semester1')?.getAttribute('checked');
-  if (sem1 == 'true') {
+  const sem1 = (document.getElementById('semester1') as HTMLInputElement)
+    .checked;
+  const sem2 = (document.getElementById('semester2') as HTMLInputElement)
+    .checked;
+  if (sem1 == true) {
     return 1;
-  } else {
+  } else if (sem2 == true) {
     return 2;
+  } else {
+    console.log("ERROR: can't find a selected semester");
+    return currentSem();
   }
 }
 
