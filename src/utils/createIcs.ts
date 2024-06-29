@@ -1,7 +1,7 @@
 import { EventAttributes, createEvents } from 'ics';
+import { webDays } from '../types';
 import { getDates } from './format/getDates';
 import scrapData from './scrapData';
-
 /**  ICS frequency rule */
 const RRULE = ({
   day,
@@ -20,11 +20,12 @@ const RRULE = ({
 export const createICS = async (semester: 1 | 2) => {
   const dates = getDates(new Date().getFullYear());
   const events: EventAttributes[] = [];
-  let index = -1;
+
   const semDates = dates[semester];
   const result = await scrapData();
+
   Object.keys(result).forEach((key) => {
-    index++;
+    const dayIndex = webDays.indexOf(key);
     const dayResult = result[key];
     if (dayResult.length == 0) return;
     dayResult.forEach((event) => {
@@ -43,7 +44,7 @@ export const createICS = async (semester: 1 | 2) => {
         start: [
           dates.currentYear, //year
           semDates.start.month, //month
-          semDates.start.day + index, //day
+          semDates.start.day + dayIndex, //day
           event.time.start.hour, //hour
           event.time.start.minutes, // minute
         ],
@@ -58,7 +59,7 @@ export const createICS = async (semester: 1 | 2) => {
           '\n ' +
           (event.location ? event.location.url : ''),
         recurrenceRule: RRULE({
-          day: (semDates.end.day + index).toString(),
+          day: (semDates.end.day + dayIndex).toString(),
           month: semDates.end.month.toString(),
           year: dates.currentYear,
         }),

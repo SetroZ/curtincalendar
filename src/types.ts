@@ -55,7 +55,7 @@ export interface MonthListType {
   July: Date;
   October: Date;
 }
-
+export const webDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 export interface semesterDatesType {
   1: {
     start: {
