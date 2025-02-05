@@ -2,8 +2,8 @@
 
 import { createEvents, EventAttributes } from 'ics';
 import { command } from './types';
+import { ClickForward } from './utils/buttons';
 import { addEvents } from './utils/createIcs';
-import { ClickForward } from './utils/loop';
 
 async function readTable() {
   const data = await chrome.storage.local.get(['forward', 'events']);

@@ -14,20 +14,6 @@ const setDateButton = document.getElementById(
 ) as HTMLButtonElement;
 
 export function setDate(sem: number) {
-  // const enterKeyEvent = new KeyboardEvent('keydown', {
-  //   key: 'Enter',
-  //   code: 'Enter',
-  //   which: 13,
-  //   keyCode: 13,
-  // });
-  // focus();
-  // dateInput.focus();
-  // dateInput.dispatchEvent(enterKeyEvent);
-  // setTimeout(() => {
-  //   dateInput.dispatchEvent(enterKeyEvent);
-  //   setDateButton.click();
-  // }, 1000);
-
   const dates = getDates(new Date().getFullYear());
   const events: EventAttributes[] = [];
   const start = dates[sem as 1 | 2].start;
@@ -41,6 +27,19 @@ export function readDate() {
 export function ClickForward() {
   forwardButton.click();
 }
-export function loop(sem: number) {
-  forwardButton.click();
+
+function setDate2() {
+  // const enterKeyEvent = new KeyboardEvent('keydown', {
+  //   key: 'Enter',
+  //   code: 'Enter',
+  //   which: 13,
+  //   keyCode: 13,
+  // });
+  // focus();
+  // dateInput.focus();
+  // dateInput.dispatchEvent(enterKeyEvent);
+  // setTimeout(() => {
+  //   dateInput.dispatchEvent(enterKeyEvent);
+  //   setDateButton.click();
+  // }, 1000);
 }

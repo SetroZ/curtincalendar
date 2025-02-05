@@ -2,7 +2,7 @@
 
 import { command } from './types';
 
-import { setDate } from './utils/loop';
+import { setDate } from './utils/buttons';
 
 chrome.runtime.onMessage.addListener(async function (
   request,
