@@ -2,7 +2,7 @@
   "name": "curtin_calendar",
   "version": "0.2.2",
   "description": "A chrome extension to help import your curtin timetable into your calendar of choice.",
-  "license":"GPL-3.0-only",
+  "license": "GPL-3.0-only",
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.config.js",
@@ -12,7 +12,7 @@
     "format": "prettier --write --ignore-unknown \"{config,public,src}/**/*.{html,css,js,ts,json}\""
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.181",
+    "@types/chrome": "^0.0.301",
     "adm-zip": "^0.5.10",
     "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.10.0",

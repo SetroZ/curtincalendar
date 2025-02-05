@@ -1,4 +1,4 @@
-import { MonthListType } from '../../types';
+import { monthListType } from '../../types';
 function getnthMonday(date: Date, n: number) {
   const newDate = new Date(date);
   while (newDate.getDay() !== 1) {
@@ -22,7 +22,7 @@ function getDatesofMonths(year: number) {
     dates[month] = new Date(`${month} 1, ${currentYear}`);
   });
 
-  return { ...(dates as unknown as MonthListType), currentYear };
+  return { ...(dates as unknown as monthListType), currentYear };
 }
 
 export function getDates(year: number) {

@@ -1,6 +1,7 @@
-import { EventAttributes, createEvents } from 'ics';
+import { EventAttributes } from 'ics';
 import { webDays } from '../types';
 import { getDates } from './format/getDates';
+import { readDate } from './loop';
 import scrapData from './scrapData';
 /**  ICS frequency rule */
 const RRULE = ({
@@ -17,12 +18,12 @@ const RRULE = ({
   }${day.length == 1 ? '0' + day : day}T160000Z`;
 
 // const icsDays = ['MO', 'TU', 'WE', 'TH', 'FR'];
-export const createICS = async (semester: 1 | 2) => {
-  const dates = getDates(new Date().getFullYear());
-  const events: EventAttributes[] = [];
 
-  const semDates = dates[semester];
-  const result = await scrapData();
+export const addEvents = async (events: EventAttributes[]) => {
+  const dates = getDates(new Date().getFullYear());
+
+  const date = readDate();
+  const result = await scrapData(date);
 
   Object.keys(result).forEach((key) => {
     const dayIndex = webDays.indexOf(key);
@@ -42,9 +43,9 @@ export const createICS = async (semester: 1 | 2) => {
         startOutputType: 'local',
         title: event.title + ' ' + event.type,
         start: [
-          dates.currentYear, //year
-          semDates.start.month, //month
-          semDates.start.day + dayIndex, //day
+          event.date.getFullYear(),
+          event.date.getMonth() + 1,
+          event.date.getDate(),
           event.time.start.hour, //hour
           event.time.start.minutes, // minute
         ],
@@ -58,18 +59,9 @@ export const createICS = async (semester: 1 | 2) => {
           event.type +
           '\n ' +
           (event.location ? event.location.url : ''),
-        recurrenceRule: RRULE({
-          day: (semDates.end.day + dayIndex).toString(),
-          month: semDates.end.month.toString(),
-          year: dates.currentYear,
-        }),
       };
 
-      console.log(singleEvent);
       events.push(singleEvent);
     });
   });
-  const { error, value } = createEvents(events);
-
-  return value;
 };

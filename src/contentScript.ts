@@ -1,23 +1,21 @@
 'use strict';
 
 import { command } from './types';
-import { createICS } from './utils/createIcs';
 
-async function handleDownload(semester: 1 | 2) {
-  const result = await createICS(semester);
+import { setDate } from './utils/loop';
 
-  const fileName = 'CurtinCalendar.ics';
-  return { result, fileName };
-}
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(async function (
+  request,
+  sender,
+  sendResponse
+) {
   switch (request.command) {
-    case command.download: {
-      handleDownload(request.semester).then((res) => {
-        sendResponse(res);
-      });
+    case command.click: {
+      chrome.storage.local.set({ events: [], forward: 0 });
+      setDate(request.semester);
       break;
     }
   }
+
   return true;
 });
