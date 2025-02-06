@@ -2,9 +2,8 @@
 
 import { createEvents, EventAttributes } from 'ics';
 import { command } from './types';
-import { ClickForward } from './utils/buttons';
-import { addEvents } from './utils/createIcs';
-
+import { ClickForward, dateInput, refreshButton } from './utils/buttons';
+import { addEvents } from './utils/scrapEvents';
 async function readTable() {
   const data = await chrome.storage.local.get(['forward', 'events']);
   const events: EventAttributes[] = data.events;
@@ -31,6 +30,8 @@ async function readTable() {
       command: command.download,
       value: value,
     })) as any;
+    dateInput.value = '';
+    refreshButton.click();
   }
 }
 

@@ -1,15 +1,15 @@
 import { EventAttributes } from 'ics';
 import { getDates } from './format/getDates';
 
-const dateInput = document.getElementById(
+export const dateInput = document.getElementById(
   'ctl00_Content_ctlFilter_TxtStartDt'
 ) as HTMLInputElement;
 
-const forwardButton = document.getElementById(
+export const forwardButton = document.getElementById(
   'ctl00_Content_ctlActionBarBottom_WkNext'
 ) as HTMLButtonElement;
 
-const setDateButton = document.getElementById(
+export const refreshButton = document.getElementById(
   'ctl00_Content_ctlFilter_BtnSearch'
 ) as HTMLButtonElement;
 
@@ -18,7 +18,7 @@ export function setDate(sem: number) {
   const events: EventAttributes[] = [];
   const start = dates[sem as 1 | 2].start;
   dateInput.value = `${start.day}-${start.month}-${new Date().getFullYear()}`;
-  setDateButton.click();
+  refreshButton.click();
 }
 
 export function readDate() {
@@ -40,6 +40,6 @@ function setDate2() {
   // dateInput.dispatchEvent(enterKeyEvent);
   // setTimeout(() => {
   //   dateInput.dispatchEvent(enterKeyEvent);
-  //   setDateButton.click();
+  //   refreshButton.click();
   // }, 1000);
 }
