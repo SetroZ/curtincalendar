@@ -1,5 +1,7 @@
 export enum command {
   download = 'download',
+  click = 'click',
+  forward = 'forward',
 }
 export enum responses {
   fail = 'fail',
@@ -46,15 +48,32 @@ export interface scrappedDataType {
   };
   time: classTimeType;
   title: string;
+  date: Date;
 }
 
-export interface MonthListType {
+export interface monthListType {
   Februray: Date;
   May: Date;
 
   July: Date;
   October: Date;
 }
+
+export const webMonths = [
+  '0',
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 export const webDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 export interface semesterDatesType {
   1: {

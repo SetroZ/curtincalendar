@@ -124,6 +124,12 @@ code {
   animation: spin 2s linear infinite;
 }
 
+#note {
+  font-weight: bold;
+  color: crimson;
+  font-size: 14;
+}
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);

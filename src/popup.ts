@@ -4,23 +4,25 @@ import './popup.css';
 import { command } from './types';
 
 // State
-let loading = false;
+
 const visible = 'inline-block';
 const hidden = 'none';
 const button = document.getElementById(command.download) as HTMLElement;
 const loader = document.getElementById('loader') as HTMLElement;
 const errorElement = document.getElementById('error') as HTMLElement;
 
-function setLoading(isVisible: boolean) {
-  if (!isVisible) {
-    loading = false;
-    button.style.display = visible;
-    loader.style.display = hidden;
-  } else {
-    loading = true;
+async function isLoading() {
+  const loading =
+    (await chrome.storage.local.get('forward')).forward == 0 ? true : false;
+
+  if (loading) {
     button.style.display = hidden;
     loader.style.display = visible;
+  } else {
+    button.style.display = visible;
+    loader.style.display = hidden;
   }
+  return loading;
 }
 
 function onError(errorMessage: string) {
@@ -32,43 +34,60 @@ function onError(errorMessage: string) {
     errorElement.style.display = hidden;
     errorElement.innerText = message;
 
-    setLoading(false);
+    isLoading();
   }, 5000);
 }
 
-function onClick() {
+async function onClick() {
   button.addEventListener('click', async () => {
     try {
-      if (loading) {
-        return;
-      }
-      setLoading(true);
+      await isLoading();
       const [tab] = await chrome.tabs.query({
         active: true,
         currentWindow: true,
       });
-
-      const { result, fileName }: { result: string; fileName: string } =
-        (await chrome.tabs.sendMessage(tab.id as number, {
-          command: command.download,
-          semester: getSelectedSemester(),
-        })) as any;
-
-      const icsFile = new File([result as string], fileName, {
-        type: 'text/calendar',
-      });
-      const url = URL.createObjectURL(icsFile);
-      chrome.downloads.download({
-        url: url,
-        filename: fileName,
-      });
-      setLoading(false);
+      (await chrome.tabs.sendMessage(tab.id as number, {
+        command: command.click,
+        semester: getSelectedSemester(),
+      })) as any;
+      await isLoading();
     } catch (error) {
-      onError(error as string);
+      // onError(error as string);
     }
   });
 }
 
+async function OnMessage() {
+  chrome.runtime.onMessage.addListener(async function (
+    request,
+    sender,
+    sendResponse
+  ) {
+    switch (request.command) {
+      case command.download: {
+        await isLoading();
+        const icsFile = new File(
+          [request.value as string],
+          'CurtinCalendar.ics',
+          {
+            type: 'text/calendar',
+          }
+        );
+        const url = URL.createObjectURL(icsFile);
+        chrome.downloads.download({
+          url: url,
+          filename: 'CurtinCalendar.ics',
+        });
+        break;
+      }
+      case command.forward: {
+        sendResponse(true);
+      }
+    }
+
+    return true;
+  });
+}
 // approximate semesters by month
 const yearMonths = [
   [1, 2, 3, 4, 5],
@@ -108,5 +127,9 @@ function getSelectedSemester(): 1 | 2 {
 function main() {
   setDefaultSemester();
   onClick();
+  OnMessage();
 }
+window.addEventListener('unload', async () => {
+  await chrome.storage.local.clear();
+});
 main();

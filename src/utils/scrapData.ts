@@ -44,10 +44,15 @@ interface metaDataType {
   time: Date | false;
   title: string;
 }
-
+function addDays(date: Date, days: number) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
 /**  Reads data from webpage returns scrappedData */
-export default async function scrapData() {
+export default async function scrapData(date: Date) {
   const results: { [key: string]: scrappedDataType[] } = {};
+  let dayIndex = 0;
   for (const day of webDays) {
     let count = 0;
     while (true) {
@@ -67,6 +72,7 @@ export default async function scrapData() {
         location: '',
         time: '',
         title: '',
+        date: addDays(date, dayIndex),
       };
       for (const [key, value] of Object.entries(metDataClassNames)) {
         const result = metDataElement.querySelector('.' + value)!
@@ -82,6 +88,7 @@ export default async function scrapData() {
       results[day].push(data);
       count++;
     }
+    dayIndex++;
   }
   return results;
 }

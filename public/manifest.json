@@ -12,15 +12,20 @@
     "default_title": "Curtin Calendar",
     "default_popup": "popup.html"
   },
-  "permissions": ["downloads"],
-
+  "permissions": ["downloads", "storage"],
+  
+  
+    
+  
+  
+  
   "content_scripts": [
     {
       "matches": [
         "https://curtin-web.t1cloud.com/T1SMDefault/WebApps/eStudent/SM/*"
       ],
       "run_at": "document_idle",
-      "js": ["contentScript.js"]
+      "js": ["contentScript.js","readTable.js"]
     }
   ]
 }
